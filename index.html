@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Case Converter</title>
+</head>
+<body>
+
+<div class="title">Case Converter</div>
+<textarea name="textarea1" id="textarea box"></textarea>
+<button id="upper-case">Upper Case</button>
+<button id="lower-case">Lower Case</button>
+<button id="proper-case">Proper Case</button>
+<button id="sentence-case">Sentence Case</button>
+<button id="save-text-file">Save Text File</button>
+<script>
+    let upperCase = document.getElementById("upper-case");
+    let lowerCase = document.getElementById("lower-case");
+    let properCase = document.getElementById("proper-case");
+    let sentenceCase = document.getElementById("sentence-case");
+    let download = document.getElementById("save-text-file");
+
+    upperCase.addEventListener("click", function () {
+        let text = document.getElementById("textarea box");
+        text.value = text.value.toUpperCase();
+    });
+
+    lowerCase.addEventListener("click", function () {
+       let text = document.getElementById("textarea box");
+       text.value = text.value.toLowerCase();
+    });
+
+    properCase.addEventListener("click", function () {
+       let text = document.getElementById("textarea box");
+       let words = text.value.split(" ");
+        for (let i = 0; i < words.length; i++) {
+            words[i] = words[i][0].toUpperCase() + words[i].substring(1);
+        }
+        text.value = words.join(" ");
+    });
+
+    sentenceCase.addEventListener("click", function () {
+        let textToSentence = document.getElementById('textarea box').value;
+        let sentences = textToSentence.split(". ");
+        for (let i = 0; i < sentences.length; i++) {
+            sentences[i] = sentences[i][0].toUpperCase() + sentences[i].substring(1).toLowerCase();
+        }
+        console.log(sentences)
+        sentences = sentences.join(". ");
+        document.getElementById('textarea box').value = sentences;
+    });
+
+    download.addEventListener("click", function download(filename, text) {
+        let element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+
+        element.style.display = 'none';
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
+        download("text.txt",document.getElementById('textarea box').value);
+    });
+
+</script>
+</body>
+</html>
